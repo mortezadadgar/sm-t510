@@ -132,12 +132,37 @@ struct knox_user_socket_metadata {
 };
 
 /* The list of function which is being referenced by the af_inet.c class */
+#ifdef CONFIG_KNOX_NCM
 extern unsigned int check_ncm_flag(void);
 extern void knox_collect_conntrack_data(struct nf_conn *ct, int startStop, int where);
 extern bool kfifo_status(void);
 extern void insert_data_kfifo_kthread(struct knox_socket_metadata* knox_socket_metadata);
 extern unsigned int check_intermediate_flag(void);
 extern unsigned int get_intermediate_timeout(void);
+#else
+static inline unsigned int check_ncm_flag(void)
+{
+	return 0;
+}
+static inline void knox_collect_conntrack_data(struct nf_conn *ct, int startStop, int where)
+{
+}
+static inline bool kfifo_status(void)
+{
+	return false;
+}
+static inline void insert_data_kfifo_kthread(struct knox_socket_metadata* knox_socket_metadata)
+{
+}
+static inline unsigned int check_intermediate_flag(void)
+{
+	return 0;
+}
+static inline unsigned int get_intermediate_timeout(void)
+{
+	return 0;
+}
+#endif
 
 /* Debug */
 #define NCM_DEBUG        1
