@@ -41,7 +41,7 @@ anykernel()
 	while true
 	do
 		read -p "Please enter anykernel path : " anykernel
-		cp arch/arm64/boot/image $anykernel
+		cp arch/arm64/boot/Image $anykernel
 		cd $anykernel && return
 		sleep 5s
 	done
@@ -101,7 +101,7 @@ echo "TOOLCHAIN : $CROSS_COMPILE"
 sleep 10s
 printf "\nBuilding...\n"
 make -j$(nproc --all) || exit 1
-echo -e "\e[1;31m BUILD DONE! : \e[0m"
+echo -e "\e[1;31m BUILD DONE! \e[0m"
 END=$(date +%s)
 echo "Compilation time:${RST} $(format_time "${START}" "${END}")"
 
